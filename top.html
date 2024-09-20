@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Re:ゼロシミュレーター</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #1a1a1a;
+            background-image: 
+                radial-gradient(#ff00ff 2px, transparent 2px),
+                radial-gradient(#00ffff 2px, transparent 2px);
+            background-size: 60px 60px;
+            background-position: 0 0, 30px 30px;
+            color: #ffffff;
+            font-family: 'Noto Sans JP', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(45deg, #ff00ff 25%, transparent 25%) -50px 0,
+                linear-gradient(-45deg, #ff00ff 25%, transparent 25%) -50px 0,
+                linear-gradient(45deg, transparent 75%, #00ffff 75%),
+                linear-gradient(-45deg, transparent 75%, #00ffff 75%);
+            background-size: 100px 100px;
+            opacity: 0.1;
+            z-index: -1;
+        }
+        h1 {
+            font-size: 2.5em;
+            color: #ff00ff;
+            text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 30px #ff00ff;
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #00ffff;
+            text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff;
+            margin-top: 30px;
+        }
+        .reZero-button {
+            background-color: rgba(255, 0, 255, 0.7);
+            border: 2px solid #ff00ff;
+            border-radius: 5px;
+            color: white;
+            padding: 15px 30px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 10px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px #ff00ff;
+        }
+        .reZero-button:hover {
+            background-color: rgba(204, 0, 204, 0.9);
+            box-shadow: 0 0 20px #ff00ff, 0 0 40px #ff00ff;
+        }
+        .result-box {
+            background-color: rgba(0, 0, 0, 0.7);
+            border: 2px solid #00ffff;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
+        }
+    </style>
+</head>
+<body>
+    <h1>Re:ゼロシミュレーター</h1>
+    <p>異世界での運命をシミュレートしましょう</p>
+    <h2>アイコン獲得抽選</h2>
+    <button class="reZero-button">抽選する</button>
+    <h2>白鯨攻略戦</h2>
+    <button class="reZero-button">攻略開始</button>
+    <h2>結果</h2>
+    <div class="result-box">結果がここに表示されます</div>
+</body>
+</html>
