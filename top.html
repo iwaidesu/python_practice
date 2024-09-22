@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Re:ゼロシミュレーター</title>
+    <title>リゼロシミュレーター</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            background-image: url('path/to/your/image.jpg');
+            background-image: url('haikei画像.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -16,56 +16,16 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             min-height: 100vh;
             margin: 0;
             padding: 20px;
             box-sizing: border-box;
             text-align: center;
         }
-        
-        /* パステルカラーのグラデーションオーバーレイを追加 */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                45deg,
-                rgba(255, 182, 193, 0.7),
-                rgba(255, 218, 185, 0.7),
-                rgba(173, 216, 230, 0.7)
-            );
-            z-index: -1;
-        }
-
-        /* かわいいフォントを使用 */
-        body {
-            font-family: 'Kawaii', 'Comic Sans MS', cursive;
-        }
-
-        /* ハートの装飾を追加 */
-        .heart {
-            position: fixed;
-            font-size: 20px;
-            color: pink;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-
-        /* テキストの可読性を確保するために、テキストに影を追加 */
-        body {
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
-        }
 
         h1 {
-            font-size: 3em;
+            font-size: 4em;
             color: #ffffff;
             text-shadow: 
                 2px 2px 0 #ff00ff,
@@ -75,57 +35,215 @@
                 0 0 10px #ff00ff,
                 0 0 20px #ff00ff,
                 0 0 30px #ff00ff;
+            margin-top: 50px;
             margin-bottom: 30px;
+            letter-spacing: 3px;
+            font-weight: bold;
+        }
+
+        p {
+            font-size: 1.8em;
+            color: #00ffff;
+            text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff, 0 0 15px #00ffff;
+            margin-bottom: 40px;
             letter-spacing: 2px;
             font-weight: bold;
         }
-        h2 {
-            color: #00ffff;
-            text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff;
-            margin-top: 30px;
+
+        .game-section {
+            background-color: rgba(0, 0, 0, 0.7);
+            border: 3px solid #ff00ff;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 0 20px #ff00ff;
         }
+
+        .game-section h2 {
+            font-size: 2.5em;
+            color: #ff00ff;
+            text-shadow: 0 0 10px #ff00ff;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
         .reZero-button {
-            background-color: rgba(255, 0, 255, 0.7);
-            border: 2px solid #ff00ff;
+            font-size: 1.2em;
+            padding: 10px 20px;
+            background-color: #ff00ff;
+            color: #ffffff;
+            border: none;
             border-radius: 5px;
-            color: white;
-            padding: 15px 30px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 10px 0;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 0 10px #ff00ff;
         }
+
         .reZero-button:hover {
-            background-color: rgba(204, 0, 204, 0.9);
-            box-shadow: 0 0 20px #ff00ff, 0 0 40px #ff00ff;
+            background-color: #00ffff;
+            box-shadow: 0 0 15px #00ffff;
         }
-        .result-box {
-            background-color: rgba(0, 0, 0, 0.7);
-            border: 2px solid #00ffff;
-            padding: 20px;
-            margin-top: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
+
+        #bgmControl {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
         }
     </style>
 </head>
 <body>
-    <h1>Re:ゼロシミュレーター</h1>
+    <div id="bgmControl">
+        <button onclick="toggleBGM()">BGM ON/OFF</button>
+    </div>
+
+    <audio id="bgm" loop>
+        <source src="リゼロ スバルの着メロ 19話【実機】 Subaru's Ringtone (Re：zero EP19) (1).mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <h1>リゼロシミュレーター</h1>
     <p>異世界での運命をシミュレートしましょう</p>
-    <h2>アイコン獲得抽選</h2>
-    <button class="reZero-button">抽選する</button>
-    <h2>白鯨攻略戦</h2>
-    <button class="reZero-button">攻略開始</button>
-    <h2>結果</h2>
-    <div class="result-box">結果がここに表示されます</div>
-    
-    <!-- ハートの装飾を追加 -->
-    <div class="heart" style="top: 10%; left: 5%;">♥</div>
-    <div class="heart" style="top: 20%; right: 10%;">♥</div>
-    <div class="heart" style="bottom: 15%; left: 15%;">♥</div>
+
+    <div class="game-section">
+        <h2>アイコン獲得抽選</h2>
+        <button id="iconButton" class="reZero-button" onclick="startIconSimulation()">抽選する</button>
+        <div id="result"></div>
+    </div>
+
+    <div class="game-section">
+        <h2>白鯨攻略戦</h2>
+        <button id="whaleAttackButton" class="reZero-button" onclick="startWhaleAttack()" disabled>攻略開始</button>
+        <div id="whaleResult"></div>
+    </div>
+
+    <script>
+        let bgm = document.getElementById('bgm');
+        let atSound = new Audio('鬼がかってますね レム 《リゼロ11話》.mp3');
+        let isBGMPlaying = false;
+
+        function toggleBGM() {
+            if (isBGMPlaying) {
+                bgm.pause();
+                isBGMPlaying = false;
+            } else {
+                playBGM();
+            }
+        }
+
+        function playBGM() {
+            bgm.play();
+            isBGMPlaying = true;
+        }
+
+        function playATSound() {
+            bgm.pause();
+            isBGMPlaying = false;
+            atSound.play();
+        }
+
+        // サイト内のどこかをクリックしたらBGMを再生
+        document.body.addEventListener('click', function startBGM() {
+            if (!isBGMPlaying) {
+                playBGM();
+                // 一度再生されたら、このイベントリスナーを削除
+                document.body.removeEventListener('click', startBGM);
+            }
+        });
+
+        // BGMの音量を設定
+        bgm.volume = 0.5; // 音量を50%に設定
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        async function startIconSimulation() {
+            let result = document.getElementById('result');
+            result.innerHTML = '';
+            document.getElementById('whaleAttackButton').disabled = true;
+            document.getElementById('iconButton').disabled = true;
+
+            // アイコン抽選
+            let randNum = Math.floor(Math.random() * 100) + 1;
+            let selectedIcon = '';
+            if (randNum <= 40) selectedIcon = "青";
+            else if (randNum <= 70) selectedIcon = "黄色";
+            else if (randNum <= 85) selectedIcon = "緑";
+            else if (randNum <= 95) selectedIcon = "赤";
+            else selectedIcon = "鬼";
+
+            result.innerHTML += `生成された数字: ${randNum}<br>`;
+            await sleep(2000);
+            result.innerHTML += `選択されたアイコン: ${selectedIcon}<br>`;
+            await sleep(1000);
+            result.innerHTML += `それでは獲得した${selectedIcon}アイコンで撃破率ＵＰチャレンジを行います。<br>`;
+
+            // 撃破率UPチャレンジ
+            let baseRate = 56;
+            currentRate = baseRate;
+            let continueCount = 0;
+            let loopProbability = selectedIcon === "青" ? 50 :
+                                  selectedIcon === "黄色" ? 66 :
+                                  selectedIcon === "緑" ? 86 :
+                                  selectedIcon === "赤" ? 95 : 99;
+
+            while (Math.random() * 100 <= loopProbability && currentRate < 100) {
+                currentRate++;
+                continueCount++;
+            }
+
+            await sleep(1000);
+            result.innerHTML += `継続回数: ${continueCount}<br>`;
+            result.innerHTML += `最終撃破率: ${currentRate}%<br>`;
+
+            if (currentRate === 100) {
+                result.innerHTML += "AT確定<br>";
+                playATSound();
+            } else {
+                result.innerHTML += `この${currentRate}%で突破チャレンジを行います。<br>`;
+            }
+
+            // 白鯨攻略戦ボタンを有効化
+            document.getElementById('whaleAttackButton').disabled = false;
+        }
+
+        async function startWhaleAttack() {
+            let whaleResult = document.getElementById('whaleResult');
+            whaleResult.innerHTML = '';
+            document.getElementById('whaleAttackButton').disabled = true;
+
+            whaleResult.innerHTML += "<br>【白鯨攻略戦】開始<br>";
+            await sleep(1000);
+            whaleResult.innerHTML += `撃破率: ${currentRate}%<br>`;
+
+            let challengeCount = 0;
+            let successCount = 0;
+
+            while (challengeCount < 3) {
+                challengeCount++;
+                let challengeResult = Math.random() * 100 <= currentRate;
+                await sleep(1000);
+                if (challengeResult) {
+                    whaleResult.innerHTML += `チャレンジ ${challengeCount}: 突破成功<br>`;
+                    successCount++;
+                } else {
+                    whaleResult.innerHTML += `チャレンジ ${challengeCount}: 突破失敗<br>`;
+                    break;
+                }
+            }
+
+            await sleep(1000);
+            if (successCount === 3) {
+                whaleResult.innerHTML += "AT確定";
+            } else if (successCount > 0) {
+                whaleResult.innerHTML += `白鯨攻略失敗（${successCount}回成功）`;
+            } else {
+                whaleResult.innerHTML += "白鯨攻略失敗（0回成功）";
+            }
+
+            // アイコン獲得抽選ボタンを再度有効化
+            document.getElementById('iconButton').disabled = false;
+        }
+    </script>
 </body>
 </html>
