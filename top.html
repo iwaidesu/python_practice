@@ -24,7 +24,7 @@
             text-align: center;
         }
 
-        h1 {
+        h1, .subtitle {
             font-size: 4em;
             color: #ffffff;
             text-shadow: 
@@ -39,6 +39,12 @@
             margin-bottom: 30px;
             letter-spacing: 3px;
             font-weight: bold;
+        }
+
+        .subtitle {
+            font-size: 2em;
+            margin-top: 0;
+            margin-bottom: 40px;
         }
 
         p {
@@ -89,6 +95,44 @@
             right: 10px;
             z-index: 1000;
         }
+
+        .hidden {
+            opacity: 0;
+        }
+
+        .reveal {
+            animation: revealText 3s forwards; /* アニメーション時間を3秒に延長 */
+        }
+
+        @keyframes revealText {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        #overlay p {
+            color: white;
+            font-size: 4em;
+            text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 30px #ff00ff;
+        }
     </style>
 </head>
 <body>
@@ -101,19 +145,23 @@
         Your browser does not support the audio element.
     </audio>
 
-    <h1>リゼロシミュレーター</h1>
-    <p>異世界での運命をシミュレートしましょう</p>
+    <h1 class="hidden">リゼロシミュレーター</h1>
+    <p class="subtitle hidden">異世界での運命をシミュレートしましょう</p>
 
-    <div class="game-section">
+    <div class="game-section hidden">
         <h2>アイコン獲得抽選</h2>
         <button id="iconButton" class="reZero-button" onclick="startIconSimulation()">抽選する</button>
         <div id="result"></div>
     </div>
 
-    <div class="game-section">
+    <div class="game-section hidden">
         <h2>白鯨攻略戦</h2>
         <button id="whaleAttackButton" class="reZero-button" onclick="startWhaleAttack()" disabled>攻略開始</button>
         <div id="whaleResult"></div>
+    </div>
+
+    <div id="overlay">
+        <p>AT確定</p>
     </div>
 
     <script>
@@ -141,109 +189,60 @@
             atSound.play();
         }
 
-        // サイト内のどこかをクリックしたらBGMを再生
+        function revealElements() {
+            const elements = document.querySelectorAll('.hidden');
+            elements.forEach((element, index) => {
+                setTimeout(() => {
+                    element.classList.add('reveal');
+                    element.classList.remove('hidden');
+                }, index * 1500); // 各要素を1.5秒ずつ遅らせて表示
+            });
+        }
+
+        // ページ読み込み完了時に実行
+        window.addEventListener('load', function() {
+            setTimeout(revealElements, 1000); // ページ読み込み後、1秒待ってから開始
+        });
+
         document.body.addEventListener('click', function startBGM() {
             if (!isBGMPlaying) {
                 playBGM();
-                // 一度再生されたら、このイベントリスナーを削除
                 document.body.removeEventListener('click', startBGM);
             }
         });
 
-        // BGMの音量を設定
         bgm.volume = 0.5; // 音量を50%に設定
 
-        function sleep(ms) {
-            return new Promise(resolve => setTimeout(resolve, ms));
-        }
+        let successCount = 0;
 
-        async function startIconSimulation() {
-            let result = document.getElementById('result');
-            result.innerHTML = '';
-            document.getElementById('whaleAttackButton').disabled = true;
-            document.getElementById('iconButton').disabled = true;
-
-            // アイコン抽選
-            let randNum = Math.floor(Math.random() * 100) + 1;
-            let selectedIcon = '';
-            if (randNum <= 40) selectedIcon = "青";
-            else if (randNum <= 70) selectedIcon = "黄色";
-            else if (randNum <= 85) selectedIcon = "緑";
-            else if (randNum <= 95) selectedIcon = "赤";
-            else selectedIcon = "鬼";
-
-            result.innerHTML += `生成された数字: ${randNum}<br>`;
-            await sleep(2000);
-            result.innerHTML += `選択されたアイコン: ${selectedIcon}<br>`;
-            await sleep(1000);
-            result.innerHTML += `それでは獲得した${selectedIcon}アイコンで撃破率ＵＰチャレンジを行います。<br>`;
-
-            // 撃破率UPチャレンジ
-            let baseRate = 56;
-            currentRate = baseRate;
-            let continueCount = 0;
-            let loopProbability = selectedIcon === "青" ? 50 :
-                                  selectedIcon === "黄色" ? 66 :
-                                  selectedIcon === "緑" ? 86 :
-                                  selectedIcon === "赤" ? 95 : 99;
-
-            while (Math.random() * 100 <= loopProbability && currentRate < 100) {
-                currentRate++;
-                continueCount++;
-            }
-
-            await sleep(1000);
-            result.innerHTML += `継続回数: ${continueCount}<br>`;
-            result.innerHTML += `最終撃破率: ${currentRate}%<br>`;
-
-            if (currentRate === 100) {
-                result.innerHTML += "AT確定<br>";
-                playATSound();
-            } else {
-                result.innerHTML += `この${currentRate}%で突破チャレンジを行います。<br>`;
-            }
-
-            // 白鯨攻略戦ボタンを有効化
-            document.getElementById('whaleAttackButton').disabled = false;
-        }
-
-        async function startWhaleAttack() {
-            let whaleResult = document.getElementById('whaleResult');
-            whaleResult.innerHTML = '';
-            document.getElementById('whaleAttackButton').disabled = true;
-
-            whaleResult.innerHTML += "<br>【白鯨攻略戦】開始<br>";
-            await sleep(1000);
-            whaleResult.innerHTML += `撃破率: ${currentRate}%<br>`;
-
-            let challengeCount = 0;
-            let successCount = 0;
-
-            while (challengeCount < 3) {
-                challengeCount++;
-                let challengeResult = Math.random() * 100 <= currentRate;
-                await sleep(1000);
-                if (challengeResult) {
-                    whaleResult.innerHTML += `チャレンジ ${challengeCount}: 突破成功<br>`;
-                    successCount++;
-                } else {
-                    whaleResult.innerHTML += `チャレンジ ${challengeCount}: 突破失敗<br>`;
-                    break;
+        function startWhaleAttack() {
+            // 白鯨攻略戦のロジック（例：50%の確率で成功）
+            const isSuccess = Math.random() < 0.5;
+            const whaleResult = document.getElementById('whaleResult');
+            
+            if (isSuccess) {
+                successCount++;
+                whaleResult.textContent = `攻略成功！ (${successCount}/3)`;
+                if (successCount >= 3) {
+                    showATConfirmation();
+                    successCount = 0; // リセット
                 }
-            }
-
-            await sleep(1000);
-            if (successCount === 3) {
-                whaleResult.innerHTML += "AT確定";
-            } else if (successCount > 0) {
-                whaleResult.innerHTML += `白鯨攻略失敗（${successCount}回成功）`;
             } else {
-                whaleResult.innerHTML += "白鯨攻略失敗（0回成功）";
+                successCount = 0; // 失敗したらリセット
+                whaleResult.textContent = '攻略失敗...';
             }
-
-            // アイコン獲得抽選ボタンを再度有効化
-            document.getElementById('iconButton').disabled = false;
         }
+
+        function showATConfirmation() {
+            const overlay = document.getElementById('overlay');
+            overlay.style.display = 'flex';
+            playATSound();
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 5000);
+        }
+
+        // ... 他の既存のJavaScript ...
     </script>
 </body>
 </html>
