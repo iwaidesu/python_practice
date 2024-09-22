@@ -7,12 +7,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            background-color: #1a1a1a;
-            background-image: 
-                radial-gradient(#ff00ff 2px, transparent 2px),
-                radial-gradient(#00ffff 2px, transparent 2px);
-            background-size: 60px 60px;
-            background-position: 0 0, 30px 30px;
+            background-image: url('path/to/your/image.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             color: #ffffff;
             font-family: 'Noto Sans JP', sans-serif;
             display: flex;
@@ -25,6 +23,8 @@
             box-sizing: border-box;
             text-align: center;
         }
+        
+        /* パステルカラーのグラデーションオーバーレイを追加 */
         body::before {
             content: "";
             position: fixed;
@@ -32,20 +32,52 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: 
-                linear-gradient(45deg, #ff00ff 25%, transparent 25%) -50px 0,
-                linear-gradient(-45deg, #ff00ff 25%, transparent 25%) -50px 0,
-                linear-gradient(45deg, transparent 75%, #00ffff 75%),
-                linear-gradient(-45deg, transparent 75%, #00ffff 75%);
-            background-size: 100px 100px;
-            opacity: 0.1;
+            background: linear-gradient(
+                45deg,
+                rgba(255, 182, 193, 0.7),
+                rgba(255, 218, 185, 0.7),
+                rgba(173, 216, 230, 0.7)
+            );
             z-index: -1;
         }
+
+        /* かわいいフォントを使用 */
+        body {
+            font-family: 'Kawaii', 'Comic Sans MS', cursive;
+        }
+
+        /* ハートの装飾を追加 */
+        .heart {
+            position: fixed;
+            font-size: 20px;
+            color: pink;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* テキストの可読性を確保するために、テキストに影を追加 */
+        body {
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+        }
+
         h1 {
-            font-size: 2.5em;
-            color: #ff00ff;
-            text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 30px #ff00ff;
+            font-size: 3em;
+            color: #ffffff;
+            text-shadow: 
+                2px 2px 0 #ff00ff,
+                -2px -2px 0 #ff00ff,
+                2px -2px 0 #ff00ff,
+                -2px 2px 0 #ff00ff,
+                0 0 10px #ff00ff,
+                0 0 20px #ff00ff,
+                0 0 30px #ff00ff;
             margin-bottom: 30px;
+            letter-spacing: 2px;
+            font-weight: bold;
         }
         h2 {
             color: #00ffff;
@@ -90,5 +122,10 @@
     <button class="reZero-button">攻略開始</button>
     <h2>結果</h2>
     <div class="result-box">結果がここに表示されます</div>
+    
+    <!-- ハートの装飾を追加 -->
+    <div class="heart" style="top: 10%; left: 5%;">♥</div>
+    <div class="heart" style="top: 20%; right: 10%;">♥</div>
+    <div class="heart" style="bottom: 15%; left: 15%;">♥</div>
 </body>
 </html>
